@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+venv/
+env/
+.venv/
+
+# Environment
+.env
+
+# Models (large binary files - auto-downloaded on first run)
+models/*.pt
+*.pt
+!models/.gitkeep
+
+# Data (user-provided videos, not committed)
+data/road_videos/*
+data/driver_videos/*
+!data/road_videos/.gitkeep
+!data/driver_videos/.gitkeep
+
+# Outputs (generated at runtime)
+outputs/*
+!outputs/.gitkeep
+!outputs/logs/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Ultralytics runtime files
+runs/

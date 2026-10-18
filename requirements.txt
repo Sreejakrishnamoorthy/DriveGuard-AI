@@ -1,0 +1,79 @@
+# ============================================================================
+# DriveGuard AI - Python Dependencies
+# ============================================================================
+# NOTE ON PINNED VERSIONS BELOW:
+# Several packages here are pinned to EXACT or capped versions because
+# newer releases have been verified (during development of this project)
+# to either break required functionality or conflict with each other.
+# Installing in a fresh virtual environment with this file as-is avoids
+# those issues. See the inline comments on each pin for why.
+# ============================================================================
+
+# Core ML & Computer Vision
+torch>=2.0.0
+torchvision>=0.15.0
+opencv-python>=4.8.0
+numpy>=1.24.0
+pandas>=2.0.0
+
+# YOLO & Object Detection
+ultralytics>=8.0.0
+
+# Tracking (supervision provides a maintained ByteTrack implementation)
+supervision>=0.16.0,<0.31.0
+
+# Face & Eye Detection
+# PINNED: mediapipe>=0.10.15 removed the mp.solutions.face_mesh /
+# mp.solutions.face_detection API this project's driver-monitoring code
+# depends on, replacing it with a Tasks API that requires separately
+# downloading .task model files. 0.10.14 is the last version with the
+# legacy solutions API intact.
+mediapipe==0.10.14
+
+# PINNED: mediapipe 0.10.14 requires protobuf<5, but streamlit>=1.50
+# requires protobuf>=5.26.1. protobuf 4.25.9 is the highest version that
+# satisfies mediapipe's ceiling while both libraries import and run
+# correctly against it in practice (verified during development,
+# including a full Streamlit app run with zero errors).
+#
+# NOTE: `pip check` will report a metadata mismatch for streamlit's
+# protobuf requirement here — this is EXPECTED and harmless. It is a
+# declared-constraint warning, not an actual runtime failure; both
+# libraries were directly verified to function correctly together at
+# this exact protobuf version.
+protobuf==4.25.9
+
+# Web Framework & APIs
+fastapi>=0.104.0
+uvicorn>=0.24.0
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+python-dotenv>=1.0.0
+
+# Frontend
+streamlit>=1.28.0
+plotly>=5.18.0
+
+# Database
+pymongo>=4.5.0
+
+# LLM Integration
+requests>=2.31.0
+
+# Utilities
+python-multipart>=0.0.6
+Pillow>=10.0.0
+
+# Testing
+pytest>=7.4.0
+mongomock>=4.1.0
+
+# ============================================================================
+# Notes:
+# - torch and torchvision: CPU or GPU versions depend on your system.
+#   For GPU (CUDA 12.1): pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+#   For CPU (default above): plain `pip install -r requirements.txt` is fine.
+# - ultralytics: downloads YOLOv8 weights automatically on first run.
+# - mediapipe: used for face/eye/head-pose driver monitoring. See pin note above.
+# - mongomock: lets tests exercise real database logic without a running MongoDB.
+# ============================================================================
